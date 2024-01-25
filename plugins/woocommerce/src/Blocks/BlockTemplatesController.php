@@ -64,10 +64,9 @@ class BlockTemplatesController {
 		add_filter( 'taxonomy_template_hierarchy', array( $this, 'add_archive_product_to_eligible_for_fallback_templates' ), 10, 1 );
 		add_filter( 'post_type_archive_title', array( $this, 'update_product_archive_title' ), 10, 2 );
 		add_action( 'after_switch_theme', array( $this, 'check_should_use_blockified_product_grid_templates' ), 10, 2 );
+		add_action( 'after_switch_theme', array( $this, 'maybe_migrate_content' ), 10, 2 );
 
 		if ( wc_current_theme_is_fse_theme() ) {
-			add_action( 'init', array( $this, 'maybe_migrate_content' ) );
-
 			// By default, the Template Part Block only supports template parts that are in the current theme directory.
 			// This render_callback wrapper allows us to add support for plugin-housed template parts.
 			add_filter(
@@ -770,8 +769,17 @@ class BlockTemplatesController {
 
 	/**
 	 * Migrates page content to templates if needed.
+	 *
+	 * @param string    $old_name Old theme name.
+	 * @param \WP_Theme $old_theme Instance of the old theme.
+	 * @return void
 	 */
-	public function maybe_migrate_content() {
+	public function maybe_migrate_content( $old_name, $old_theme ) {
+		// Only try to migrate content if we are moving from a classic theme to a block theme.
+		if ( $old_theme->is_block_theme() || ! wc_current_theme_is_fse_theme() ) {
+			return;
+		}
+
 		// Migration should occur on a normal request to ensure every requirement is met.
 		// We are postponing it if WP is in maintenance mode, installing, WC installing or if the request is part of a WP-CLI command.
 		if ( wp_is_maintenance_mode() || ! get_option( 'woocommerce_db_version', false ) || Constants::is_defined( 'WP_SETUP_CONFIG' ) || Constants::is_defined( 'WC_INSTALLING' ) || Constants::is_defined( 'WP_CLI' ) ) {
