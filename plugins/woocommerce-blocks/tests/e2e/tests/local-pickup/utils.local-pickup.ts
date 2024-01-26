@@ -22,20 +22,20 @@ export const utilsLocalPickup = {
 		);
 	},
 
-	savelocalPickupSettings: async ( { page }: { page: Page } ) => {
+	saveLocalPickupSettings: async ( { page }: { page: Page } ) => {
 		await page.getByRole( 'button', { name: 'Save changes' } ).click();
 	},
 
 	enableLocalPickup: async ( { page }: { page: Page } ) => {
 		await page.getByLabel( 'Enable local pickup' ).check();
 
-		await utilsLocalPickup.savelocalPickupSettings( { page } );
+		await utilsLocalPickup.saveLocalPickupSettings( { page } );
 	},
 
 	disableLocalPickup: async ( { page }: { page: Page } ) => {
 		await page.getByLabel( 'Enable local pickup' ).uncheck();
 
-		await utilsLocalPickup.savelocalPickupSettings( { page } );
+		await utilsLocalPickup.saveLocalPickupSettings( { page } );
 	},
 
 	enableLocalPickupCosts: async ( { page }: { page: Page } ) => {
@@ -43,7 +43,7 @@ export const utilsLocalPickup = {
 			.getByLabel( 'Add a price for customers who choose local pickup' )
 			.check();
 
-		await utilsLocalPickup.savelocalPickupSettings( { page } );
+		await utilsLocalPickup.saveLocalPickupSettings( { page } );
 	},
 
 	disableLocalPickupCosts: async ( { page }: { page: Page } ) => {
@@ -51,7 +51,7 @@ export const utilsLocalPickup = {
 			.getByLabel( 'Add a price for customers who choose local pickup' )
 			.uncheck();
 
-		await utilsLocalPickup.savelocalPickupSettings( { page } );
+		await utilsLocalPickup.saveLocalPickupSettings( { page } );
 	},
 
 	clearLocations: async ( admin: Admin, page: Page ) => {
@@ -82,7 +82,7 @@ export const utilsLocalPickup = {
 		await page.waitForSelector(
 			'.pickup-locations tbody tr td:has-text("When you add a pickup location, it will appear here.")'
 		);
-		await utilsLocalPickup.savelocalPickupSettings( { page } );
+		await utilsLocalPickup.saveLocalPickupSettings( { page } );
 	},
 
 	removeCostForLocalPickup: async ( { page }: { page: Page } ) => {
@@ -90,7 +90,7 @@ export const utilsLocalPickup = {
 			.getByLabel( 'Add a price for customers who choose local pickup' )
 			.uncheck();
 
-		await utilsLocalPickup.savelocalPickupSettings( { page } );
+		await utilsLocalPickup.saveLocalPickupSettings( { page } );
 	},
 
 	addPickupLocation: async ( {
@@ -113,7 +113,7 @@ export const utilsLocalPickup = {
 		await page.getByLabel( 'Pickup details' ).fill( location.details );
 		await page.getByRole( 'button', { name: 'Done' } ).click();
 
-		await utilsLocalPickup.savelocalPickupSettings( { page } );
+		await utilsLocalPickup.saveLocalPickupSettings( { page } );
 	},
 
 	editPickupLocation: async ( {
@@ -136,13 +136,13 @@ export const utilsLocalPickup = {
 		await page.getByLabel( 'Pickup details' ).fill( location.details );
 		await page.getByRole( 'button', { name: 'Done' } ).click();
 
-		await utilsLocalPickup.savelocalPickupSettings( { page } );
+		await utilsLocalPickup.saveLocalPickupSettings( { page } );
 	},
 
 	deletePickupLocation: async ( { page }: { page: Page } ) => {
 		await page.getByRole( 'button', { name: 'Edit' } ).click();
 		await page.getByRole( 'button', { name: 'Delete location' } ).click();
 
-		await utilsLocalPickup.savelocalPickupSettings( { page } );
+		await utilsLocalPickup.saveLocalPickupSettings( { page } );
 	},
 };

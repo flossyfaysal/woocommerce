@@ -31,7 +31,7 @@ test.describe( 'Merchant → Local Pickup Settings', () => {
 			.getByPlaceholder( 'Local Pickup' )
 			.fill( 'Local Pickup Test #1' );
 
-		await utils.savelocalPickupSettings( { page } );
+		await utils.saveLocalPickupSettings( { page } );
 
 		await expect( page.getByPlaceholder( 'Local Pickup' ) ).toHaveValue(
 			'Local Pickup Test #1'
@@ -41,7 +41,7 @@ test.describe( 'Merchant → Local Pickup Settings', () => {
 			.getByPlaceholder( 'Local Pickup' )
 			.fill( 'Local Pickup Test #2' );
 
-		await utils.savelocalPickupSettings( { page } );
+		await utils.saveLocalPickupSettings( { page } );
 
 		await expect( page.getByPlaceholder( 'Local Pickup' ) ).toHaveValue(
 			'Local Pickup Test #2'
@@ -78,7 +78,7 @@ test.describe( 'Merchant → Local Pickup Settings', () => {
 		await page.getByPlaceholder( 'Free' ).fill( '20' );
 		await page.getByLabel( 'Taxes' ).selectOption( 'none' );
 
-		await utils.savelocalPickupSettings( { page } );
+		await utils.saveLocalPickupSettings( { page } );
 
 		await expect( page.getByPlaceholder( 'Free' ) ).toHaveValue( '20' );
 		await expect( page.getByLabel( 'Taxes' ) ).toHaveValue( 'none' );
@@ -86,7 +86,7 @@ test.describe( 'Merchant → Local Pickup Settings', () => {
 		await page.getByPlaceholder( 'Free' ).fill( '' );
 		await page.getByLabel( 'Taxes' ).selectOption( 'taxable' );
 
-		await utils.savelocalPickupSettings( { page } );
+		await utils.saveLocalPickupSettings( { page } );
 
 		await expect( page.getByPlaceholder( 'Free' ) ).toHaveValue( '' );
 		await expect( page.getByLabel( 'Taxes' ) ).toHaveValue( 'taxable' );
