@@ -20,6 +20,7 @@ import {
 	PerformanceUtils,
 	ShippingUtils,
 	LocalPickupUtils,
+	MiniCartUtils,
 } from '@woocommerce/e2e-utils';
 
 /**
@@ -40,7 +41,7 @@ function observeConsoleLogging( message: ConsoleMessage ) {
 	const type = message.type();
 	if (
 		! OBSERVED_CONSOLE_MESSAGE_TYPES.includes(
-			type as typeof OBSERVED_CONSOLE_MESSAGE_TYPES[ number ]
+			type as ( typeof OBSERVED_CONSOLE_MESSAGE_TYPES )[ number ]
 		)
 	) {
 		return;
@@ -93,7 +94,8 @@ function observeConsoleLogging( message: ConsoleMessage ) {
 		return;
 	}
 
-	const logFunction = type as typeof OBSERVED_CONSOLE_MESSAGE_TYPES[ number ];
+	const logFunction =
+		type as ( typeof OBSERVED_CONSOLE_MESSAGE_TYPES )[ number ];
 
 	// Disable reason: We intentionally bubble up the console message
 	// which, unless the test explicitly anticipates the logging via
@@ -117,6 +119,7 @@ const test = base.extend<
 		snapshotConfig: void;
 		shippingUtils: ShippingUtils;
 		localPickupUtils: LocalPickupUtils;
+		miniCartUtils: MiniCartUtils;
 	},
 	{
 		requestUtils: RequestUtils;
@@ -162,6 +165,9 @@ const test = base.extend<
 	},
 	localPickupUtils: async ( { page }, use ) => {
 		await use( new LocalPickupUtils( page ) );
+	},
+	miniCartUtils: async ( { page }, use ) => {
+		await use( new MiniCartUtils( page ) );
 	},
 	requestUtils: [
 		async ( {}, use, workerInfo ) => {

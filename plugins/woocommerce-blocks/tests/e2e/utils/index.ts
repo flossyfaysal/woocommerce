@@ -4,6 +4,7 @@ export * from './constants';
 export * from './editor';
 export * from './frontend';
 export * from './local-pickup';
+export * from './mini-cart';
 export * from './performance';
 export * from './shipping';
 export * from './storeApi';

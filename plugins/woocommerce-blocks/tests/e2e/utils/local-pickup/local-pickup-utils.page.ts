@@ -15,6 +15,12 @@ type Location = {
 };
 
 export class LocalPickupUtils {
+	private page: Page;
+
+	constructor( page: Page ) {
+		this.page = page;
+	}
+
 	async openLocalPickupSettings( { admin }: { admin: Admin } ) {
 		await admin.visitAdminPage(
 			'admin.php',
