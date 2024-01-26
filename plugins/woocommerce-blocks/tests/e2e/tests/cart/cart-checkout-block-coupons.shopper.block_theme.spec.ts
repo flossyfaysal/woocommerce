@@ -100,12 +100,12 @@ test.describe( 'Shopper → Coupon', () => {
 			page.getByText( 'Coupon usage limit has been reached.' )
 		).toBeVisible();
 
-		await admin.visitAdminPage( 'edit.php?post_type=shop_coupon' );
+		await admin.visitAdminPage( 'edit.php', 'post_type=shop_coupon' );
 		await page
 			.getByRole( 'link', { name: 'single-use-coupon', exact: true } )
 			.click();
 		await page.getByRole( 'link', { name: 'Move to Trash' } ).click();
-		await admin.visitAdminPage( 'edit.php?post_type=shop_coupon' );
+		await admin.visitAdminPage( 'edit.php', 'post_type=shop_coupon' );
 
 		await expect(
 			page.getByRole( 'link', { name: 'single-use-coupon', exact: true } )

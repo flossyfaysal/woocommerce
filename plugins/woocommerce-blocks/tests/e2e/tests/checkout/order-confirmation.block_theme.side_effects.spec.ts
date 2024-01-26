@@ -175,7 +175,8 @@ test.describe( 'Shopper → Order Confirmation → Local Pickup', () => {
 		admin,
 	} ) => {
 		await admin.visitAdminPage(
-			'admin.php?page=wc-settings&tab=shipping&section=pickup_location'
+			'admin.php',
+			'page=wc-settings&tab=shipping&section=pickup_location'
 		);
 		await admin.page.getByLabel( 'Enable local pickup' ).uncheck();
 		await admin.page.getByLabel( 'Enable local pickup' ).check();
@@ -250,7 +251,7 @@ test.describe( 'Shopper → Order Confirmation → Downloadable Products', () =>
 		).toBeHidden();
 
 		// Update last order status to completed.
-		await admin.visitAdminPage( 'edit.php?post_type=shop_order' );
+		await admin.visitAdminPage( 'edit.php', 'post_type=shop_order' );
 		await admin.page.waitForSelector( '.wp-list-table' );
 		await admin.page.click(
 			'.wp-list-table tbody tr:first-child a.order-view'
