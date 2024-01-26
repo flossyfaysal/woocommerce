@@ -9,7 +9,6 @@ import { adminFile, guestFile } from '@woocommerce/e2e-utils';
  */
 import { CheckoutPage } from '../checkout/checkout.page';
 import { utilsLocalPickup } from '../local-pickup/utils.local-pickup';
-import { utilsShipping } from './utils.shipping';
 import { REGULAR_PRICED_PRODUCT_NAME } from '../checkout/constants';
 
 const test = base.extend< { checkoutPageObject: CheckoutPage } >( {
@@ -27,13 +26,14 @@ test.describe( 'Merchant → Shipping', () => {
 	test( 'Merchant can enable shipping calculator and hide shipping costs before address is entered', async ( {
 		admin,
 		page,
+		shippingUtils,
 	} ) => {
 		await utilsLocalPickup.openLocalPickupSettings( { admin } );
 		await utilsLocalPickup.disableLocalPickup( { page } );
 
-		await utilsShipping.openShippingSettings( { admin } );
-		await utilsShipping.enableShippingCalculator( { page } );
-		await utilsShipping.enableShippingCostsRequireAddress( { page } );
+		await shippingUtils.openShippingSettings( { admin } );
+		await shippingUtils.enableShippingCalculator( { page } );
+		await shippingUtils.enableShippingCostsRequireAddress( { page } );
 
 		await expect(
 			page.getByLabel( 'Enable the shipping calculator on the cart page' )

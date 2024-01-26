@@ -18,6 +18,7 @@ import {
 	FrontendUtils,
 	StoreApiUtils,
 	PerformanceUtils,
+	ShippingUtils,
 } from '@woocommerce/e2e-utils';
 
 /**
@@ -38,7 +39,7 @@ function observeConsoleLogging( message: ConsoleMessage ) {
 	const type = message.type();
 	if (
 		! OBSERVED_CONSOLE_MESSAGE_TYPES.includes(
-			type as ( typeof OBSERVED_CONSOLE_MESSAGE_TYPES )[ number ]
+			type as typeof OBSERVED_CONSOLE_MESSAGE_TYPES[ number ]
 		)
 	) {
 		return;
@@ -91,8 +92,7 @@ function observeConsoleLogging( message: ConsoleMessage ) {
 		return;
 	}
 
-	const logFunction =
-		type as ( typeof OBSERVED_CONSOLE_MESSAGE_TYPES )[ number ];
+	const logFunction = type as typeof OBSERVED_CONSOLE_MESSAGE_TYPES[ number ];
 
 	// Disable reason: We intentionally bubble up the console message
 	// which, unless the test explicitly anticipates the logging via
@@ -114,6 +114,7 @@ const test = base.extend<
 		storeApiUtils: StoreApiUtils;
 		performanceUtils: PerformanceUtils;
 		snapshotConfig: void;
+		shippingUtils: ShippingUtils;
 	},
 	{
 		requestUtils: RequestUtils;
@@ -153,6 +154,9 @@ const test = base.extend<
 	},
 	storeApiUtils: async ( { requestUtils }, use ) => {
 		await use( new StoreApiUtils( requestUtils ) );
+	},
+	shippingUtils: async ( { page }, use ) => {
+		await use( new ShippingUtils( page ) );
 	},
 	requestUtils: [
 		async ( {}, use, workerInfo ) => {
