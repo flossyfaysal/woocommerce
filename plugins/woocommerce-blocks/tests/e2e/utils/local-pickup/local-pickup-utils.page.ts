@@ -14,47 +14,47 @@ type Location = {
 	details: string;
 };
 
-export const utilsLocalPickup = {
-	openLocalPickupSettings: async ( { admin }: { admin: Admin } ) => {
+export class LocalPickupUtils {
+	async openLocalPickupSettings( { admin }: { admin: Admin } ) {
 		await admin.visitAdminPage(
 			'admin.php',
 			'page=wc-settings&tab=shipping&section=pickup_location'
 		);
-	},
+	}
 
-	saveLocalPickupSettings: async ( { page }: { page: Page } ) => {
+	async saveLocalPickupSettings( { page }: { page: Page } ) {
 		await page.getByRole( 'button', { name: 'Save changes' } ).click();
-	},
+	}
 
-	enableLocalPickup: async ( { page }: { page: Page } ) => {
+	async enableLocalPickup( { page }: { page: Page } ) {
 		await page.getByLabel( 'Enable local pickup' ).check();
 
-		await utilsLocalPickup.saveLocalPickupSettings( { page } );
-	},
+		await this.saveLocalPickupSettings( { page } );
+	}
 
-	disableLocalPickup: async ( { page }: { page: Page } ) => {
+	async disableLocalPickup( { page }: { page: Page } ) {
 		await page.getByLabel( 'Enable local pickup' ).uncheck();
 
-		await utilsLocalPickup.saveLocalPickupSettings( { page } );
-	},
+		await this.saveLocalPickupSettings( { page } );
+	}
 
-	enableLocalPickupCosts: async ( { page }: { page: Page } ) => {
+	async enableLocalPickupCosts( { page }: { page: Page } ) {
 		await page
 			.getByLabel( 'Add a price for customers who choose local pickup' )
 			.check();
 
-		await utilsLocalPickup.saveLocalPickupSettings( { page } );
-	},
+		await this.saveLocalPickupSettings( { page } );
+	}
 
-	disableLocalPickupCosts: async ( { page }: { page: Page } ) => {
+	async disableLocalPickupCosts( { page }: { page: Page } ) {
 		await page
 			.getByLabel( 'Add a price for customers who choose local pickup' )
 			.uncheck();
 
-		await utilsLocalPickup.saveLocalPickupSettings( { page } );
-	},
+		await this.saveLocalPickupSettings( { page } );
+	}
 
-	clearLocations: async ( admin: Admin, page: Page ) => {
+	async clearLocations( admin: Admin, page: Page ) {
 		await admin.visitAdminPage(
 			'admin.php',
 			'page=wc-settings&tab=shipping&section=pickup_location'
@@ -82,24 +82,24 @@ export const utilsLocalPickup = {
 		await page.waitForSelector(
 			'.pickup-locations tbody tr td:has-text("When you add a pickup location, it will appear here.")'
 		);
-		await utilsLocalPickup.saveLocalPickupSettings( { page } );
-	},
+		await this.saveLocalPickupSettings( { page } );
+	}
 
-	removeCostForLocalPickup: async ( { page }: { page: Page } ) => {
+	async removeCostForLocalPickup( { page }: { page: Page } ) {
 		await page
 			.getByLabel( 'Add a price for customers who choose local pickup' )
 			.uncheck();
 
-		await utilsLocalPickup.saveLocalPickupSettings( { page } );
-	},
+		await this.saveLocalPickupSettings( { page } );
+	}
 
-	addPickupLocation: async ( {
+	async addPickupLocation( {
 		page,
 		location,
 	}: {
 		page: Page;
 		location: Location;
-	} ) => {
+	} ) {
 		await page.getByText( 'Add pickup location' ).click();
 		await page.getByLabel( 'Location name' ).fill( location.name );
 		await page.getByPlaceholder( 'Address' ).fill( location.address );
@@ -113,16 +113,16 @@ export const utilsLocalPickup = {
 		await page.getByLabel( 'Pickup details' ).fill( location.details );
 		await page.getByRole( 'button', { name: 'Done' } ).click();
 
-		await utilsLocalPickup.saveLocalPickupSettings( { page } );
-	},
+		await this.saveLocalPickupSettings( { page } );
+	}
 
-	editPickupLocation: async ( {
+	async editPickupLocation( {
 		page,
 		location,
 	}: {
 		page: Page;
 		location: Location;
-	} ) => {
+	} ) {
 		await page.getByRole( 'button', { name: 'Edit' } ).click();
 		await page.getByLabel( 'Location name' ).fill( location.name );
 		await page.getByPlaceholder( 'Address' ).fill( location.address );
@@ -136,13 +136,13 @@ export const utilsLocalPickup = {
 		await page.getByLabel( 'Pickup details' ).fill( location.details );
 		await page.getByRole( 'button', { name: 'Done' } ).click();
 
-		await utilsLocalPickup.saveLocalPickupSettings( { page } );
-	},
+		await this.saveLocalPickupSettings( { page } );
+	}
 
-	deletePickupLocation: async ( { page }: { page: Page } ) => {
+	async deletePickupLocation( { page }: { page: Page } ) {
 		await page.getByRole( 'button', { name: 'Edit' } ).click();
 		await page.getByRole( 'button', { name: 'Delete location' } ).click();
 
-		await utilsLocalPickup.saveLocalPickupSettings( { page } );
-	},
-};
+		await this.saveLocalPickupSettings( { page } );
+	}
+}

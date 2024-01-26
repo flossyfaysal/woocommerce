@@ -19,6 +19,7 @@ import {
 	StoreApiUtils,
 	PerformanceUtils,
 	ShippingUtils,
+	LocalPickupUtils,
 } from '@woocommerce/e2e-utils';
 
 /**
@@ -115,6 +116,7 @@ const test = base.extend<
 		performanceUtils: PerformanceUtils;
 		snapshotConfig: void;
 		shippingUtils: ShippingUtils;
+		localPickupUtils: LocalPickupUtils;
 	},
 	{
 		requestUtils: RequestUtils;
@@ -157,6 +159,9 @@ const test = base.extend<
 	},
 	shippingUtils: async ( { page }, use ) => {
 		await use( new ShippingUtils( page ) );
+	},
+	localPickupUtils: async ( { page }, use ) => {
+		await use( new LocalPickupUtils( page ) );
 	},
 	requestUtils: [
 		async ( {}, use, workerInfo ) => {

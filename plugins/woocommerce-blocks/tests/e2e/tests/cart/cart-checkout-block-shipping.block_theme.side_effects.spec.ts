@@ -8,7 +8,6 @@ import { adminFile, guestFile } from '@woocommerce/e2e-utils';
  * Internal dependencies
  */
 import { CheckoutPage } from '../checkout/checkout.page';
-import { utilsLocalPickup } from '../local-pickup/utils.local-pickup';
 import { REGULAR_PRICED_PRODUCT_NAME } from '../checkout/constants';
 
 const test = base.extend< { checkoutPageObject: CheckoutPage } >( {
@@ -27,9 +26,10 @@ test.describe( 'Merchant → Shipping', () => {
 		admin,
 		page,
 		shippingUtils,
+		localPickupUtils,
 	} ) => {
-		await utilsLocalPickup.openLocalPickupSettings( { admin } );
-		await utilsLocalPickup.disableLocalPickup( { page } );
+		await localPickupUtils.openLocalPickupSettings( { admin } );
+		await localPickupUtils.disableLocalPickup( { page } );
 
 		await shippingUtils.openShippingSettings( { admin } );
 		await shippingUtils.enableShippingCalculator( { page } );
